@@ -1,0 +1,29 @@
+---
+name: Publish Docker
+
+on:
+  release:
+    types:
+      - created
+      - edited
+      - released
+      - published
+
+env:
+  REGISTRY: harbor.octanner.io
+  NAME: cloudops/aws-encryption-provider
+
+jobs:
+  push-release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@main
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@v4
+      with:
+        name: ${{ env.NAME }}
+        registry: ${{ env.REGISTRY }}
+        username: ${{ secrets.HARBOR_GITHUB_USERNAME }}
+        password: ${{ secrets.HARBOR_GITHUB_PASSWORD }}
+        tag_names: true
+        tag_semver: true
