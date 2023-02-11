@@ -1,4 +1,4 @@
-REPO?=gcr.io/must-override
+REPO?=harbor.octanner.io/cloudops
 IMAGE?=aws-encryption-provider
 TAG?=0.0.1
 
@@ -19,6 +19,7 @@ build-docker:
 	docker build \
 		-t ${REPO}/${IMAGE}:latest \
 		-t ${REPO}/${IMAGE}:${TAG} \
+        --progress=plain \
 		--build-arg TAG=${TAG} .
 
 build-server:
